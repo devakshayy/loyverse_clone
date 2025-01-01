@@ -8,7 +8,7 @@ const SideBar = ({isSidebarOpen}) => {
   return (
     <aside className={`fixed top-0 left-0 
                        z-40  h-screen 
-                       pt-[42px] bg-white
+                       pt-[55px] bg-white
                        border-r border-gray-200
                        transition-all duration-300
                        ${isSidebarOpen ? "w-[300px]" : "w-[70px]"} `}>

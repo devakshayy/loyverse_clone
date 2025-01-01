@@ -10,6 +10,7 @@ import Customers from "./Page/Customers";
 import Integration from "./Page/Integration";
 import Settings from "./Page/Settings";
 import Help from "./Page/Help";
+import Create from "./Page/Create";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -23,7 +24,7 @@ function App() {
      
       <Header openToggle={openToggle} className="fixed top-0 left-0 w-full z-50" />
 
-      <div className="flex flex-1 mt-[40px]"> 
+      <div className="flex flex-1 mt-[55px]"> 
         {/* Sidebar */}
         <SideBar
           isSidebarOpen={isSidebarOpen}
@@ -37,6 +38,7 @@ function App() {
         >
           <Routes>
             <Route path="/items" element={<Items />} />
+            <Route path="/create" element={ <Create/> } />
             <Route path="/reports" element={<Reports />} />
             <Route path="/inventrymanagement" element={ <Inventrymanagement/> } />
             <Route path="/employees" element={ <Employees/> } />
