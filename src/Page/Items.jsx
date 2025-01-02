@@ -105,6 +105,9 @@ const Items = () => {
                     </div>
                   </th>
                   <th scope="col" className="px-6 py-3">
+                    ID
+                  </th>
+                  <th scope="col" className="px-6 py-3">
                     Code
                   </th>
                   <th scope="col" className="px-6 py-3">
@@ -122,9 +125,7 @@ const Items = () => {
                   <th scope="col" className="px-6 py-3">
                     Cost
                   </th>
-                  <th scope="col" className="px-6 py-3">
-                   Margin
-                  </th>
+                  
                   <th scope="col" className="px-6 py-3">
                     Actions
                   </th>
@@ -132,7 +133,7 @@ const Items = () => {
               </thead>
               <tbody>
                  {items.map((item,idx) => (
-                     <tr key={item.id} className="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-100">
+                     <tr key={idx} className="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-100">
                      <td className="w-4 p-4">
                        <div className="flex items-center">
                          <input
@@ -145,6 +146,7 @@ const Items = () => {
                          </label>
                        </div>
                      </td>
+                     <td className="px-6 py-4">{item.id}</td>
                      <td className="px-6 py-4">{item.code}</td>
                      <td className="px-6 py-4">{item.barcode}</td>
                      <th
@@ -156,14 +158,13 @@ const Items = () => {
                      <td className="px-6 py-4">{item.category}</td>
                      <td className="px-6 py-4">${item.price}</td>
                      <td className="px-6 py-4">${item.cost}</td>
-                     <td className="px-6 py-4">{item.margin}%</td>
                      <td className="flex items-center px-6 py-4">
-                       <a
-                         href="#"
+                       <Link
+                         to={`/edit/${item.id}`}
                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                        >
-                         View
-                       </a>
+                         Edit
+                       </Link>
                        <a
                          href="#"
                          className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3"
