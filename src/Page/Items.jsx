@@ -24,6 +24,22 @@ const Items = () => {
 
   useEffect(getProducts,[])
 
+  function deleteItem (id) {
+     fetch("http://localhost:4000/items/" +id,{
+      method: "DELETE"
+     })
+     .then(response => {
+        if(!response.ok){
+           throw new Error()
+        }
+
+        getProducts()
+     })
+     .catch(error => {
+        alert("Unable to Delete the product")
+     })
+  }
+
   return (
     <div className="p-4 h-screen w-full  text-white">
       <div className=" flex flex-col justify-between gap-5 pt-[24px] pb-[12px] bg-white w-full shadow-lg rounded-sm">
@@ -165,12 +181,12 @@ const Items = () => {
                        >
                          Edit
                        </Link>
-                       <a
-                         href="#"
+                       <button
+                         onClick={() => deleteItem(item.id)}
                          className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3"
                        >
                          Remove
-                       </a>
+                       </button>
                      </td>
                    </tr>
                  ))}
