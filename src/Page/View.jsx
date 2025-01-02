@@ -1,29 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const View = () => {
   const params = useParams()
   
+  const [initialData, setInitialData] = useState({})
   const [activeTab ,setActiveTab] = useState("Overview");
   const tabs = ["Overview", "Sales Information", "History"];   //for out tab buttons repeataions 
 
+
+   function getItems () {
+         fetch("http://localhost:4000/items/" + params.id)
+         .then(response => {
+            if(response.ok) {
+                 return response.json()
+            }
+            throw new Error()
+         })
+         .then(data => {
+           setInitialData(data)
+         })
+         .catch(error => {
+            alert("Unable to read the product details")
+         })
+    }
+  
+  useEffect(getItems,[])
+   
+
   const overviewData = {
-    Code: "1234",
-    Barcode: "3257980965",
-    Name: "Laptop",
-    Category: "Electronics",
-    // ImageFilename: data.imageFilename,
-    Description: "This is a Laptop"
+    Code: initialData.code,
+    Barcode: initialData.barcode,
+    Name: initialData.name,
+    Category: initialData.category,
+    Description: initialData.description
   };
 
   const salesInformationData = {
-    Price: "1000",
-    Cost: "800",
+    Price: initialData.price,
+    Cost: initialData.cost,
     // Margin: `${data.margin}%`,
   };
 
   const historyData = {
-    CreatedAt: "1/1/2025",
+    CreatedAt: initialData.createdAt
   };
 
   const renderContent = () => {
@@ -84,7 +104,7 @@ const View = () => {
                 </div>
                 <div className="text-xs w-2/4 flex flex-col gap-4">
                   {Object.entries(historyData).map(([key,value]) => (
-                     <div key={key}>{value}</div>
+                     <div key={key}>{value.slice(0,10)}</div>
                   ))}
                 </div>
               </div>
