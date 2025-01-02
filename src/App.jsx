@@ -12,6 +12,7 @@ import Settings from "./Page/Settings";
 import Help from "./Page/Help";
 import Create from "./Page/Create";
 import Edit from "./Page/Edit";
+import View from "./Page/View";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -41,6 +42,7 @@ function App() {
             <Route path="/items" element={<Items />} />
             <Route path="/create" element={ <Create/> } />
             <Route path="/edit/:id" element={<Edit />} />
+            <Route path="/view/:id" element={ <View/> } />
             <Route path="/reports" element={<Reports />} />
             <Route path="/inventrymanagement" element={ <Inventrymanagement/> } />
             <Route path="/employees" element={ <Employees/> } />

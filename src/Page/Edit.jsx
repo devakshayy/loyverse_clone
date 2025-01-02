@@ -73,9 +73,9 @@ const Edit = () => {
           </div>
           <div className=" w-full p-4 flex flex-col gap-2">
             {/* Item Code */}
-            <div className="flex items-center justify-between gap-28">
+            <div className="flex items-center justify-between gap-2">
               <label
-                className=" text-sm font-medium text-gray-700"
+                className=" text-sm font-medium text-gray-700 "
               >
                 ID:
               </label>
@@ -90,7 +90,7 @@ const Edit = () => {
                 />
               </div>
             </div>
-            <div className="flex items-center justify-between gap-28">
+            <div className="flex items-center justify-between gap-2">
               <label
                 htmlFor="code"
                 className=" text-sm font-medium text-gray-700"
@@ -113,7 +113,7 @@ const Edit = () => {
             </div>
 
             {/* Item Barcode */}
-            <div className="flex items-center justify-between gap-28">
+            <div className="flex items-center justify-between gap-2">
               <label
                 htmlFor="barcode"
                 className="text-sm font-medium text-gray-700"
@@ -135,7 +135,7 @@ const Edit = () => {
               </div>
             </div>
             {/* Item Name */}
-            <div className="flex items-center justify-between gap-28">
+            <div className="flex items-center justify-between gap-2">
               <label
                 htmlFor="name"
                 className="text-sm font-medium text-gray-700"
@@ -159,7 +159,7 @@ const Edit = () => {
 
             {/* Price Rate */}
 
-            <div className="flex items-center justify-between gap-28">
+            <div className="flex items-center justify-between gap-2">
               <label
                 htmlFor="price"
                 className=" text-sm font-medium text-gray-700"
@@ -183,7 +183,7 @@ const Edit = () => {
 
             {/* Cost */}
 
-            <div className="flex items-center justify-between gap-28">
+            <div className="flex items-center justify-between gap-2">
               <label
                 htmlFor="cost"
                 className=" text-sm font-medium text-gray-700"
@@ -207,7 +207,7 @@ const Edit = () => {
 
             {/* category starts */}
 
-            <div className="flex items-center justify-between gap-28">
+            <div className="flex items-center justify-between gap-2">
               <label
                 htmlFor="category"
                 className="block mb-1 text-sm font-medium text-gray-900"
@@ -246,7 +246,7 @@ const Edit = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between gap-28">
+            <div className="flex items-center justify-between gap-2">
               <label
                 htmlFor="image"
                 className="block text-sm font-medium text-gray-700"
@@ -268,7 +268,7 @@ const Edit = () => {
             </div>
             {/* CreatedAt */}
             
-            <div className="flex items-center justify-between gap-28">
+            <div className="flex items-center justify-between gap-2">
               <label
                 className="block text-sm font-medium text-gray-700"
               >
@@ -286,7 +286,7 @@ const Edit = () => {
             </div>
             {/* Description */}
 
-            <div className="flex items-center justify-between gap-28">
+            <div className="flex items-center justify-between gap-2">
               <label
                 htmlFor="description"
                 className="block text-sm font-medium text-gray-700"

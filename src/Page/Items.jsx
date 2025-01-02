@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { FaAngleRight,FaAngleLeft, FaCaretDown } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const Items = () => {
+  const navigate = useNavigate();
   const [items, setItems ] = useState([]);
 
   const getProducts = () => {
@@ -40,13 +41,17 @@ const Items = () => {
      })
   }
 
+  const viewHandler = (id) => {
+    navigate(`/view/${id}`)
+  }
+
   return (
     <div className="p-4 h-screen w-full  text-white">
-      <div className=" flex flex-col justify-between gap-5 pt-[24px] pb-[12px] bg-white w-full shadow-lg rounded-sm">
-        <div className="flex justify-between px-[30px] items-center">
+      <div className=" flex flex-col justify-between gap-5 pt-[24px] pb-10  bg-white w-full shadow-lg rounded-sm">
+        <div className="flex justify-between px-[30px] items-center ">
           {" "}
           {/* Add item btn div */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 ">
             <Link to="/create" className="py-1 px-2 text-xs font-medium rounded-sm text-white bg-[#8cc748]">
               + ADD ITEM
             </Link>
@@ -58,7 +63,7 @@ const Items = () => {
             </button>
           </div>
           <div className="flex gap-2 items-center">
-            <form className="w-[150px] mx-auto">
+            <form className="w-[150px]  mx-auto">
               <label
                 htmlFor="categories"
                 className="block mb-1 text-[13px] font-medium text-gray-900"
@@ -104,7 +109,7 @@ const Items = () => {
         <div>
           {/* Table div */}
 
-          <div className="relative w-full overflow-auto  ">
+          <div className="relative w-full overflow-auto ">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
                 <tr>
@@ -149,7 +154,7 @@ const Items = () => {
               </thead>
               <tbody>
                  {items.map((item,idx) => (
-                     <tr key={idx} className="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-100">
+                     <tr key={idx} onClick={() => viewHandler(item.id)} className="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-100">
                      <td className="w-4 p-4">
                        <div className="flex items-center">
                          <input
@@ -177,12 +182,17 @@ const Items = () => {
                      <td className="flex items-center px-6 py-4">
                        <Link
                          to={`/edit/${item.id}`}
+                         onClick={(e) => e.stopPropagation()}
                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                        >
                          Edit
                        </Link>
                        <button
-                         onClick={() => deleteItem(item.id)}
+                        onClick={ (e) => {
+                          e.stopPropagation();
+                          deleteItem(item.id)
+                        }}
+                        //  onClick={() => deleteItem(item.id)}
                          className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3"
                        >
                          Remove
