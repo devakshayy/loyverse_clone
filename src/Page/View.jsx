@@ -117,10 +117,10 @@ const View = () => {
 
 
   return (
-    <div className="h-full bg-[#f9f9fb] text-gray-900">
-      <div className="bg-[#f9f9fb]  text-lg justify-center flex flex-col pb-10 px-4 gap-8">
+    <div className="h-full bg-white text-gray-900">
+      <div className="bg-white  text-lg justify-center flex flex-col pb-10 px-4 gap-8">
         <div className=" flex flex-col">
-          <div className="font-meadium pb-2">item name</div>
+          <div className="font-semibold p-2">{initialData.name}</div>
 
           <div className="flex border-b-gray-800 gap-2">
              {tabs.map((tab) => (
