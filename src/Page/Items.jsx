@@ -64,9 +64,7 @@ const Items = () => {
       setFilteredItem(filteredItem);
      };
     
-  }
-  console.log(items[0]);
-  
+  }  
   return (
     <div className="p-4 h-screen w-full  text-white">
       <div className=" flex flex-col justify-between gap-5 pt-[24px] pb-10  bg-white w-full shadow-lg rounded-sm">
@@ -189,7 +187,7 @@ const Items = () => {
                   <tr
                     key={idx}
                     onClick={() => viewHandler(item.id)}
-                    className="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-100"
+                    className="bg-white border-b hover:bg-gray-50 cursor-pointer dark:hover:bg-gray-100"
                   >
                     <td className="w-4 p-4">
                       <div className="flex items-center">

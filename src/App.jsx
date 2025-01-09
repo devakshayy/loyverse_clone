@@ -43,7 +43,7 @@ function App() {
            
         {/* Page Content */}
         <div
-          className={`flex-1 text-white bg-[#ebebeb] overflow-y-auto transition-all duration-300 ${
+          className={`flex-1 text-black bg-[#ebebeb] overflow-y-auto transition-all duration-300 ${
             isSidebarOpen ?  "ml-[300px]" : "ml-[70px]"
           }`}
         >

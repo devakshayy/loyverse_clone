@@ -241,7 +241,7 @@ const Edit = () => {
                 <img
                  width="80"
                  className="rounded-md"
-                 src={"http://localhost:4000/" + initialData.imageFilename} alt="..." />
+                 src={"http://localhost:4000/images/" + initialData.imageFilename} alt="..." />
 
               </div>
             </div>

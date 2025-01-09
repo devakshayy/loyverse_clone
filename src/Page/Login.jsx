@@ -72,7 +72,7 @@ const Login = () => {
                          placeholder='Password'
                          className='rounded-md w-2/3  text-xs text-black px-2  py-1 placeholder:text-sm outline-none'
                          type="text" />
-                      <button type='submit'  className='bg-[#4294cf] font-semibold px-8  rounded-md'>{ singnIn ? "Sign Up" : "Sign In"}</button> 
+                      <button type='submit'  className='bg-[#4294cf] font-semibold px-8 text-white  rounded-md'>{ singnIn ? "Sign Up" : "Sign In"}</button> 
                   </form>
                  {!singnIn &&  <div className='text-xs mt-5 text-gray-800'>Don't have an account ?  <span onClick={() => setSignIn(true)} className='ml-2 cursor-pointer text-[#2a8bc2] font-semibold'>Sign Up</span></div>}
            </div>
