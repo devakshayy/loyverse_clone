@@ -1,27 +1,44 @@
 import React, { useEffect, useState } from "react";
-import { FaAngleRight, FaAngleLeft, FaCaretDown } from "react-icons/fa";
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
+import { AiOutlineDelete,AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 const Employees = () => {
+  
   const [employees, setEmployees] = useState([]);
 
-  function getEmployees() {
-      fetch("http://localhost:4000/employees")
-      .then(response => {
-          if(response.ok){
+  const getEmployees = () => {
+     fetch("http://localhost:4000/employees")
+     .then(response => {
+         if(response.ok){
             return response.json();
-          }
-          throw new Error();
-      })
-      .then(data => {
-          setEmployees(data)
-      })
-      .catch(error => {
-          alert("Unable to get Employees data")
-      })
+         }
+         throw new Error();
+     })
+     .then(data => {
+        setEmployees(data);
+     })
+     .catch(error => {
+        alert("Unable to get Employees data")
+     })
   }
-  
-  useEffect(getEmployees,[])  
+
+  useEffect(getEmployees,[])
+
+  const handleDelete = (id) => {
+     fetch("http://localhost:4000/employees/"+ id,{
+      method: "DELETE",
+     })
+     .then(response => {
+       if(!response.ok){
+        throw new Error()
+       }
+       getEmployees()
+     })
+     .catch(error => {
+       alert("Unable to Delete employee")
+     })
+  }
 
   return (
     <div className="p-4 h-screen w-full  text-white">
@@ -76,6 +93,9 @@ const Employees = () => {
                   <th scope="col" className="px-6 py-3">
                     Role
                   </th>
+                  <th scope="col" className="px-6 py-3 text-center">
+                     Action
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -105,6 +125,9 @@ const Employees = () => {
                       <td className="px-6 py-4">{employee.email}</td>
                       <td className="px-6 py-4">{employee.phone}</td>
                       <td className="px-6 py-4">{employee.role}</td>
+                      <td className="px-6 py-4 text-center text-red-500 " >
+                        <button onClick={() => handleDelete(employee.id)}><AiFillDelete /></button>
+                      </td>
                     </tr>
                 ))}
               </tbody>
