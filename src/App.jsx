@@ -14,6 +14,7 @@ import Create from "./Page/Create";
 import Edit from "./Page/Edit";
 import View from "./Page/View";
 import Login from "./Page/Login";
+import CreateEmployee from "./Page/CreateEmployee";
 
 function App() {
   // const navigate = useNavigate();
@@ -52,6 +53,8 @@ function App() {
             <Route path="/" element={<Login/>} />
             <Route path="/items" element={<Items />} />
             <Route path="/create" element={ <Create/> } />
+            <Route path="/createemployee" element={ <CreateEmployee/> } />
+            <Route path="/employees" element={<Employees/> } />
             <Route path="/edit/:id" element={<Edit />} />
             <Route path="/view/:id" element={ <View/> } />
             <Route path="/reports" element={<Reports />} />
