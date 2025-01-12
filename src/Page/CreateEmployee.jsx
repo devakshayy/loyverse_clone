@@ -7,35 +7,36 @@ const CreateEmployee = () => {
   const [validationErrors,setValidationErrors] = useState({})
   const navigate = useNavigate();
   
-  const handleSubmit = async (event) => {
-      event.preventDefault();
-      const formData = new FormData(event.target)
-      const employee = Object.fromEntries(formData.entries());
+ const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target)
+    const employee = Object.fromEntries(formData.entries());
+    
+    if(!employee.name || !employee.email || !employee.phone || !employee.role || !employee.poseCode){
+      alert("Please fill all the fields!!!")
+      return
+    }
 
-      if(!employee.name || !employee.email || !employee.phone || !employee.role || !employee.poseCode){
-         alert("Please Enter all Fields")
-         return
+    try {
+     const response =  await fetch("http://localhost:4000/employees",{
+         method: "POST",
+         body: formData
+      })   
+      const data = await response.json();
+      if(response.ok){
+         navigate("/employees")
+      }else if(response.status === 400) {
+         setValidationErrors(data)
       }
-
-      try {
-       const response = await fetch("http://localhost:4000/employees",{
-          method: "POST",
-          body: formData
-        })
-        const data = await response.json();
-        if(response.ok){
-          navigate("/employees")
-        }else if(response.status === 400){
-           setValidationErrors(data)
-          
-        }else{
-          alert("Unable to Add Employee")
-        }
-      } catch (error) {
-        alert("Unable to connect to the Server!!!")
+      else{
+         alert("Unable to add Employee!")
       }
-  }
-
+    } catch (error) {
+       alert("Unable to connect to the Server!!!")
+    }
+  
+    
+ }
   return (
     <div className="p-2 h-screen w-full bg-white text-gray-900 overflow-auto">  
         <form id="form" onSubmit={handleSubmit} >

@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 const Employees = () => {
   
   const [employees, setEmployees] = useState([]);
+  const [searchEmployee, setSearchEmployee] = useState("");
+  const [filteredEmployee, setFilteredEmployee] = useState([])
 
   const getEmployees = () => {
      fetch("http://localhost:4000/employees")
@@ -38,8 +40,22 @@ const Employees = () => {
      .catch(error => {
        alert("Unable to Delete employee")
      })
+  }  
+
+  const handleSearch = (e) => {
+      const searchEmployee = e.target.value;
+      setSearchEmployee(searchEmployee)
+      const filteredEmployee = employees.filter(employee => 
+                                                  employee.name.toLowerCase().includes(searchEmployee.toLowerCase()) ||
+                                                  employee.phone.toString().includes(searchEmployee.toLowerCase()) ||
+                                                  employee.role.toLowerCase().includes(searchEmployee.toLowerCase()));
+      setFilteredEmployee(filteredEmployee);  
   }
 
+  useEffect(() => {
+    setFilteredEmployee(employees)
+  },[employees])
+  
   return (
     <div className="p-4 h-screen w-full  text-white">
       <div className=" flex flex-col justify-between gap-5 pt-[24px] pb-5  bg-white w-full shadow-lg rounded-sm">
@@ -56,6 +72,8 @@ const Employees = () => {
 
           <div>
             <input
+              value={searchEmployee}
+              onChange={handleSearch}
               className="outline-none border-b-2 border-gray-800 focus:border-gray-200  text-gray-600 text-sm  px-1"
               placeholder="Search... "
               type="text"
@@ -99,7 +117,7 @@ const Employees = () => {
                 </tr>
               </thead>
               <tbody>
-                {employees.map((employee,idx) => (
+                {filteredEmployee.map((employee,idx) => (
                       <tr key={idx} className="bg-white border-b hover:bg-gray-50 cursor-pointer dark:hover:bg-gray-100">
                       <td className="w-4 p-4">
                         <div className="flex items-center">
