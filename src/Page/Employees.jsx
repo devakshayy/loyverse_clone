@@ -27,7 +27,12 @@ const Employees = () => {
 
   useEffect(getEmployees,[])
 
-  const handleDelete = (id) => {
+  const handleDelete = (id,name) => {
+    const EmployeeName = name.toUpperCase();
+    const userChoice = confirm(`Are you sure you want to Remove "${EmployeeName}"`);
+    if (!userChoice) {
+        return
+     } else {
      fetch("http://localhost:4000/employees/"+ id,{
       method: "DELETE",
      })
@@ -39,7 +44,7 @@ const Employees = () => {
      })
      .catch(error => {
        alert("Unable to Delete employee")
-     })
+     })}
   }  
 
   const handleSearch = (e) => {
@@ -144,7 +149,7 @@ const Employees = () => {
                       <td className="px-6 py-4">{employee.phone}</td>
                       <td className="px-6 py-4">{employee.role}</td>
                       <td className="px-6 py-4 text-center text-red-500 " >
-                        <button onClick={() => handleDelete(employee.id)}><AiFillDelete /></button>
+                        <button onClick={() => handleDelete(employee.id,employee.name)}><AiFillDelete /></button>
                       </td>
                     </tr>
                 ))}
