@@ -16,6 +16,7 @@ import View from "./Page/View";
 import Login from "./Page/Login";
 import CreateEmployee from "./Page/CreateEmployee";
 import CustomerView from "./Page/CustomerView";
+import CreateCustomer from "./Page/CreateCustomer";
 
 function App() {
   // const navigate = useNavigate();
@@ -62,6 +63,7 @@ function App() {
             <Route path="/inventrymanagement" element={ <Inventrymanagement/> } />
             <Route path="/employees" element={ <Employees/> } />
             <Route path="/customers" element={ <Customers/> } />
+            <Route path="/createcustomer" element={ <CreateCustomer/> }/>
             <Route path="/customers/:cusid" element={ <CustomerView/> } />
             <Route path="/integrations" element={ <Integration/> } />
             <Route path="/settings" element={ <Settings/> } />
