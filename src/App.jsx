@@ -53,7 +53,7 @@ function App() {
         >
           <Routes>
             {/* <Route path="/" element={ <ProtectedRoute isAuthenticated={false}><Login/></ProtectedRoute> }/> */}
-            <Route path="/" element={<Login/>} />
+            <Route path="/" element={<Items />} />
             <Route path="/items" element={<Items />} />
             <Route path="/create" element={ <Create/> } />
             <Route path="/createemployee" element={ <CreateEmployee/> } />

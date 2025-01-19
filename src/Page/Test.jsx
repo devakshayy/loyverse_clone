@@ -4,7 +4,7 @@ const EmployeeTable = () => {
   const [employees, setEmployees] = useState([
     { id: 1, name: 'Akshay', email: 'akshay@gmail.com', phone: '9048887162', role: 'Manager' },
     { id: 2, name: 'Amal', email: 'amal@gmail.com', phone: '8848106318', role: 'Sales Staff' },
-    { id: 3, name: 'Ayyoob', email: 'ayyoob@gamil.com', phone: '8834406318', role: 'Sales Associates' },
+    { id: 3, name: 'Ayyoob', email: 'ayyoob@gamil.com', phone: '8834406318', role: 'Sales Associa' },
     { id: 4, name: 'Avaneeth', email: 'avaneeth@gmail.com', phone: '8606918275', role: 'Cashier' },
     { id: 5, name: 'Adarsh', email: 'adardh@gmail.com', phone: '3454769797', role: 'Administrator' },
   ]);
