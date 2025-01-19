@@ -57,12 +57,12 @@ const View = () => {
                     {/* first div */}
                     <div className=" text-[#7c8291] text-xs w-1/4 flex flex-col gap-4">
                      {Object.entries(overviewData).map(([key]) => (
-                             <div key={key}>Item {key}</div>
+                             <div key={key}>Item {key || '-----'}</div>
                      ))}
                     </div>
                     <div className="text-xs w-2/4 flex flex-col gap-4">
                       {Object.entries(overviewData).map(([key,value]) => (
-                         <div key={key}>{value}</div>
+                         <div key={key}>{value|| '-----'}</div>
                       ))}
                     </div>
                   </div>
@@ -78,12 +78,12 @@ const View = () => {
                     {/* first div */}
                     <div className=" text-[#7c8291] text-xs w-1/4 flex flex-col gap-4">
                      {Object.entries(salesInformationData).map(([key]) => (
-                             <div key={key}>Item {key}</div>
+                             <div key={key}>Item {key || '-----'}</div>
                      ))}
                     </div>
                     <div className="text-xs w-2/4 flex flex-col gap-4">
                       {Object.entries(salesInformationData).map(([key,value]) => (
-                         <div key={key}>{value}</div>
+                         <div key={key}>{value || '-----'}</div>
                       ))}
                     </div>
                   </div>
@@ -99,12 +99,12 @@ const View = () => {
                 {/* first div */}
                 <div className=" text-[#7c8291] text-xs w-1/4 flex flex-col gap-4">
                  {Object.entries(historyData).map(([key]) => (
-                         <div key={key}>Item {key}</div>
+                         <div key={key}>Item {key || '-----'}</div>
                  ))}
                 </div>
                 <div className="text-xs w-2/4 flex flex-col gap-4">
                   {Object.entries(historyData).map(([key,value]) => (
-                     <div key={key}>{value.slice(0,10)}</div>
+                     <div key={key}>{value.slice(0,10) || '-----'}</div>
                   ))}
                 </div>
               </div>

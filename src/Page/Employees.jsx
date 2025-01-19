@@ -9,6 +9,69 @@ const Employees = () => {
   const [searchEmployee, setSearchEmployee] = useState("");
   const [filteredEmployee, setFilteredEmployee] = useState([])
 
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
+  
+
+
+  const handleCheckboxChange = (id) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(filteredEmployee.map((employee) => employee.id));
+    }
+    setSelectAll(!selectAll);
+  };
+
+  // const handleDeleteSelected = () => {
+  //   setEmployees((prev) => prev.filter((employee) => !selectedIds.includes(employee.id)));
+  //   setSelectedIds([]);
+  //   setSelectAll(false);
+  // };
+
+  const handleDeleteSelected = () => {
+    if (selectedIds.length === 0) {
+      alert("No customers selected to delete.");
+      return;
+    }
+  
+    const userChoice = confirm(`Are you sure you want to remove the selected Employee?`);
+    
+    if (userChoice) {
+      Promise.all(
+        selectedIds.map((id) =>
+          fetch(`http://localhost:4000/employees/${id}`, {
+            method: "DELETE",
+          })
+        )
+      )
+        .then((responses) => {
+          const failedResponses = responses.filter((response) => !response.ok);
+  
+          if (failedResponses.length > 0) {
+            throw new Error("Some deletions failed.");
+          } else {
+            setFilteredEmployee((prev) => prev.filter((employee) => !selectedIds.includes(employee.id)));
+      
+            setSelectedIds([]);
+            setSelectAll(false);
+            alert("Selected customers removed successfully.");
+          }
+        })
+        .catch(() => {
+          alert("Unable to remove some or all customers.");
+        });
+    }
+  };
+  
+
+  
   const getEmployees = () => {
      fetch("http://localhost:4000/employees")
      .then(response => {
@@ -73,6 +136,14 @@ const Employees = () => {
             >
               + ADD EMPLOYEE
             </Link>
+            {selectedIds.length > 0 && (
+                     <button
+                     className="ml-2 py-1 px-2 text-xs font-medium rounded-sm text-white bg-red-500"
+                     onClick={handleDeleteSelected}
+                   >
+                     Delete
+                   </button>
+            )}
           </div>
 
           <div>
@@ -95,6 +166,8 @@ const Employees = () => {
                   <th scope="col" className="p-4">
                     <div className="flex items-center">
                       <input
+                        checked={selectAll}
+                        onChange={handleSelectAll}
                         id="checkbox-all-search"
                         type="checkbox"
                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2"
@@ -127,6 +200,9 @@ const Employees = () => {
                       <td className="w-4 p-4">
                         <div className="flex items-center">
                           <input
+                             checked={selectedIds.includes(employee.id)}
+                             onChange={() => handleCheckboxChange(employee.id)}
+                            onClick={(e) => e.stopPropagation()}
                             id="checkbox-table-search-1"
                             type="checkbox"
                             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"

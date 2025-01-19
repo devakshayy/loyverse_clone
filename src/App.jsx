@@ -17,6 +17,7 @@ import Login from "./Page/Login";
 import CreateEmployee from "./Page/CreateEmployee";
 import CustomerView from "./Page/CustomerView";
 import CreateCustomer from "./Page/CreateCustomer";
+import CustomerEdit from "./Page/CustomerEdit";
 
 function App() {
   // const navigate = useNavigate();
@@ -64,6 +65,7 @@ function App() {
             <Route path="/employees" element={ <Employees/> } />
             <Route path="/customers" element={ <Customers/> } />
             <Route path="/createcustomer" element={ <CreateCustomer/> }/>
+            <Route path="/editcustomer/:cusid" element={ <CustomerEdit/> } />
             <Route path="/customers/:cusid" element={ <CustomerView/> } />
             <Route path="/integrations" element={ <Integration/> } />
             <Route path="/settings" element={ <Settings/> } />

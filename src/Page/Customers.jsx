@@ -8,6 +8,65 @@ const Customers = () => {
   const [customers, setCustomers] = useState([]);
   const [search, setSearch] = useState('');
   const [filteredCus,setFilteredCus] = useState([]);
+  
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
+  
+  const handleCheckboxChange = (id) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(filteredCus.map((filteredCus) => filteredCus.id));
+    }
+    setSelectAll(!selectAll);
+  };
+
+  // const handleDeleteSelected = () => {
+  //   setFilteredCus((prev) => prev.filter((filteredCus) => !selectedIds.includes(filteredCus.id)));
+  //   setSelectedIds([]);
+  //   setSelectAll(false);
+  // };
+  const handleDeleteSelected = () => {
+    if (selectedIds.length === 0) {
+      alert("No customers selected to delete.");
+      return;
+    }
+  
+    const userChoice = confirm(`Are you sure you want to remove the selected Customers?`);
+    
+    if (userChoice) {
+      Promise.all(
+        selectedIds.map((id) =>
+          fetch(`http://localhost:4000/customers/${id}`, {
+            method: "DELETE",
+          })
+        )
+      )
+        .then((responses) => {
+          const failedResponses = responses.filter((response) => !response.ok);
+  
+          if (failedResponses.length > 0) {
+            throw new Error("Some deletions failed.");
+          } else {
+            setFilteredCus((prev) => prev.filter((customer) => !selectedIds.includes(customer.id)));
+      
+            setSelectedIds([]);
+            setSelectAll(false);
+            alert("Selected customers removed successfully.");
+          }
+        })
+        .catch(() => {
+          alert("Unable to remove some or all customers.");
+        });
+    }
+  };
+  
 
   const getCustomers = () => {
     fetch("http://localhost:4000/customers")
@@ -58,6 +117,14 @@ const Customers = () => {
             >
               + ADD CUSTOMER
             </Link>
+            {selectedIds.length > 0 && (
+                     <button
+                     className="ml-2 py-1 px-2 text-xs font-medium rounded-sm text-white bg-red-500"
+                     onClick={handleDeleteSelected}
+                   >
+                     Delete
+                   </button>
+            )}
           </div>
 
           <div>
@@ -80,6 +147,8 @@ const Customers = () => {
                   <th scope="col" className="p-4">
                     <div className="flex items-center">
                       <input
+                        checked={selectAll}
+                        onChange={handleSelectAll}
                         id="checkbox-all-search"
                         type="checkbox"
                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2"
@@ -122,6 +191,8 @@ const Customers = () => {
                     <td className="w-4 p-4">
                       <div className="flex items-center">
                         <input
+                          checked={selectedIds.includes(customer.id)}
+                          onChange={() =>handleCheckboxChange(customer.id)}
                           onClick={(e) => e.stopPropagation()}
                           id="checkbox-table-search-1"
                           type="checkbox"

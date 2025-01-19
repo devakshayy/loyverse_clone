@@ -32,7 +32,6 @@ const CustomerView = () => {
   }
 
   useEffect(getCustomer,[])   
-  console.log(initialData);
  
   const handleDelete = (id,name) => {
      const customer = name.toUpperCase();
@@ -56,6 +55,10 @@ const CustomerView = () => {
      }   
   }
 
+  const editNavHandler = (id) => {
+      navigate(`/editcustomer/${id}`)
+  }
+
   
   return (
     <div className="p-2 h-screen w-full bg-white text-gray-900 overflow-auto">  
@@ -63,14 +66,14 @@ const CustomerView = () => {
          <div className='border-b-2 p-2 flex items-center justify-between'>
              <button onClick={()=>navigate("/customers")} className='text-xs flex items-center gap-2 p-1 hover:bg-gray-100'><IoChevronBack />Customer base</button>
             <div className='flex items-center gap-2'>
-            <button><FaUserEdit /></button>
+            <button onClick={() => editNavHandler(initialData.id)}><FaUserEdit /></button>
             <button onClick={() => handleDelete(initialData.id,initialData.name) }><MdDeleteSweep /></button>
             </div>
          </div>
         <div className="flex items-center gap-3 relative justify-center  p-3">
            <div className='flex flex-col items-center'>
            <FaUserCircle className='w-16 rounded-full h-16' />
-           <div className='font-semibold'>{initialData.name}</div>
+           <div className=' text-xl font-semibold'>{initialData.name}</div>
            </div>
         </div>
         <div className='p-5 flex flex-col gap-4 '>
@@ -85,7 +88,7 @@ const CustomerView = () => {
            </div>
            <div  className='flex items-center gap-2'>
             <FaLocationDot />
-             <div className='text-xs text-gray-600'>Adress at Kottakal,Kerala</div>
+             <div className='text-xs text-gray-600'>Adress at {initialData.city},{initialData.state}</div>
             </div>
            <div  className='flex items-center gap-2'>
              <LiaBarcodeSolid />
@@ -93,17 +96,17 @@ const CustomerView = () => {
              </div>
            <div  className='flex items-center gap-2'> 
             <MdMessage />
-            <div className='text-xs text-gray-600'>This is the customer from Kottakal</div>
+            <div className='text-xs text-gray-600 capitalize'>{initialData.note}</div>
            </div>
        </div>
          <div className='text-xs px-3 py-1 flex justify-between text-gray-600 border-t-2' >  {/* first div */}
            <div>
            <div><span className='text-gray-900 font-semibold'>First Visit </span>: {initialData.firstVisit}</div>
             <div><span className='text-gray-900 font-semibold'>Last Visit</span>: {initialData.lastVisit}</div>
-            <div><span className='text-gray-900 font-semibold'>Visits</span>: 0</div>
+            <div><span className='text-gray-900 font-semibold'>Visits</span>:  {initialData.totalVisits}</div>
            </div>
            <div>
-           <div><span className='text-gray-900 font-semibold'>Total Spent</span>: {initialData.totalVisits}</div>
+           <div><span className='text-gray-900 font-semibold'>Total Spent</span>:</div>
            <div><span className='text-gray-900 font-semibold'>Points</span>: {initialData.pointsBalance}</div>
            </div>
          </div>

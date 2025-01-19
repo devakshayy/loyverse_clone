@@ -1,28 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { MdEmail, MdCall, MdMessage } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { LiaBarcodeSolid } from "react-icons/lia";
 
-const CreateCustomer = () => {
-   const navigate = useNavigate()
+const CustomerEdit = () => {
+   const {cusid} = useParams();
+   const [initialData, setInitialData] = useState([])
    const [validationErrors,setValidationErrors] = useState({})
+   const navigate = useNavigate()
+   
+   const getCustomer = () => {
+      fetch(`http://localhost:4000/customers/${cusid}`)
+      .then(response => {
+         if(response.ok){
+            return response.json()
+         }throw new Error()
+      })
+      .then(data => {
+        setInitialData(data)
+      })
+      .catch(error => {
+        alert("Unable to get Customer!!!..")
+      })
+   }
+
+   useEffect(getCustomer,[])
+   
+   console.log(initialData);
+   
+
    const handleSubmit = async (e) => {
-      e.preventDefault();
+      e.preventDefault(); 
       const formData = new FormData(e.target);
       const customer = Object.fromEntries(formData.entries());
-      
+      console.log(customer);
+
       if(!customer.name || !customer.email || !customer.phone || !customer.address || !customer.city ||
          !customer.state || !customer.postalCode || !customer.country || !customer.customerCode || !customer.note){
           alert("Please fill all the fields!!!");
           return
       }
-       
 
       try {
-        const response = await fetch("http://localhost:4000/customers",{
-            method: "POST",
+        const response = await fetch(`http://localhost:4000/customers/${cusid}`,{
+            method: "PATCH",
             body: formData
          })
          const data = await response.json();
@@ -32,12 +55,13 @@ const CreateCustomer = () => {
             setValidationErrors(data)
         }
         else{
-            alert("Unable to add customer")
+            alert("Unable to Update the Customer!!")
         }
       } catch (error) {
-         alert("Server not responding")
+         alert("Server not responding!!!....")
       }
    }
+   console.log(initialData.totalVisits);
    
   return (
     <div className="p-2 h-screen w-full bg-white text-gray-900 overflow-auto">
@@ -45,8 +69,13 @@ const CreateCustomer = () => {
         <div className="flex items-center justify-center">
           <FaUserCircle className="w-20 rounded-full h-16" />
         </div>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+       {initialData && <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+          <input 
+            defaultValue={initialData.totalVisits}
+            name="totalVisits"
+            type="hidden"  />
           <input
+            defaultValue={initialData.name}
             name="name"
             autoComplete="off"
             className={`outline-none w-full border-b-2  border-gray-200 focus:border-[#4baf4f] ${ validationErrors.name > 0 ? "border-red-500" : "border-gray-200"}  text-gray-600 text-sm placeholder:text-gray-500  px-1`}
@@ -56,6 +85,7 @@ const CreateCustomer = () => {
           <div className="flex items-center gap-2 w-full">
             <MdEmail />
             <input
+              defaultValue={initialData.email}
               name="email"
               autoComplete="off"
               className={`outline-none w-full border-b-2  border-gray-200 focus:border-[#4baf4f] ${ validationErrors.email ? "border-red-500" : "border-gray-200"}  text-gray-600 text-sm placeholder:text-gray-500  px-1`}
@@ -67,6 +97,7 @@ const CreateCustomer = () => {
           <div className="flex items-center gap-2">
             <MdCall />
             <input
+             defaultValue={initialData.phone}
               name="phone"
               autoComplete="off"
               className={`outline-none w-full border-b-2  border-gray-200 focus:border-[#4baf4f] ${ validationErrors.phone ? "border-red-500" : "border-gray-200"}  text-gray-600 text-sm placeholder:text-gray-500  px-1`}
@@ -77,6 +108,7 @@ const CreateCustomer = () => {
           <div className="flex items-center gap-2">
             <FaLocationDot />
             <input
+               defaultValue={initialData.address}
               name="address"
               autoComplete="off"
               className="outline-none w-full border-b-2  border-gray-200  focus:border-[#4baf4f]  text-gray-600 text-sm placeholder:text-gray-500  px-1"
@@ -89,6 +121,7 @@ const CreateCustomer = () => {
               {/* div 1 */}
               <div className="flex items-center gap-2">
                 <input
+                  defaultValue={initialData.city}
                   name="city"
                   autoComplete="off"
                   className="outline-none border-b-2 border-gray-200  focus:border-[#4baf4f]  text-gray-600 text-sm placeholder:text-gray-500  px-1"
@@ -98,6 +131,7 @@ const CreateCustomer = () => {
               </div>
               <div className="flex items-center gap-2">
                 <input
+                  defaultValue={initialData.state}
                   name="state"
                   autoComplete="off"
                   className="outline-none border-b-2  border-gray-200  focus:border-[#4baf4f]  text-gray-600 text-sm placeholder:text-gray-500  px-1"
@@ -110,6 +144,7 @@ const CreateCustomer = () => {
               {/* div 2 */}
               <div className="flex items-center gap-2">
                 <input
+                  defaultValue={initialData.postalCode}
                   name="postalCode"
                   autoComplete="off"
                   className={`outline-none w-full border-b-2  border-gray-200 focus:border-[#4baf4f] ${ validationErrors.postalCode ? "border-red-500" : "border-gray-200"}  text-gray-600 text-sm placeholder:text-gray-500  px-1`}
@@ -119,10 +154,12 @@ const CreateCustomer = () => {
               </div>
               <div className="flex items-center gap-2">
                 <input
+                  defaultValue={initialData.country}
                   name="country"
                   autoComplete="off"
                   className="outline-none border-b-2  border-gray-200  focus:border-[#4baf4f]  text-gray-600 text-sm  placeholder:text-gray-500 px-1"
                   placeholder="Country"
+
                   type="text"
                 />
               </div>
@@ -131,6 +168,7 @@ const CreateCustomer = () => {
           <div className="flex items-center gap-2 w-full">
             <LiaBarcodeSolid />
             <input
+              defaultValue={initialData.customerCode}
               name="customerCode"
               autoComplete="off"
               className={`outline-none w-full border-b-2  border-gray-200 focus:border-[#4baf4f] ${ validationErrors.customerCode ? "border-red-500" : "border-gray-200"}  text-gray-600 text-sm placeholder:text-gray-500  px-1`}
@@ -141,6 +179,7 @@ const CreateCustomer = () => {
           <div className="flex items-center gap-2 w-full">
             <MdMessage />
             <textarea
+              defaultValue={initialData.note}
               name="note"
               autoComplete="off"
               className={`outline-none w-full border-b-2  border-gray-200 focus:border-[#4baf4f] ${ validationErrors.note ? "border-red-500" : "border-gray-200"}  text-gray-600 text-sm placeholder:text-gray-500  px-1`}
@@ -149,37 +188,33 @@ const CreateCustomer = () => {
             />
           </div>
           <div className="flex justify-end mt-4 gap-4">
-             <Link to="/customers" className="py-2 px-2 w-[100px] text-xs font-medium rounded-sm text-gray-900 bg-white shadow-md">
+             <Link to={`/customers/${cusid}`} className="py-2 px-2 w-[100px] text-xs font-medium rounded-sm text-gray-900 bg-white shadow-md">
                Cancel
              </Link>
              <button  type="submit" className="py-2 px-2 w-[100px] text-xs font-medium rounded-sm text-white bg-[#8cc748]">
                 Save
              </button>
            </div>
-        </form>
+        </form> }
       </div>
     </div>
   );
 };
 
-export default CreateCustomer;
+export default CustomerEdit;
 
 
-
-// <div>
-// <label
-//   htmlFor="poseCode"
-//   className="block text-[15px] font-medium text-gray-700"
-// >
-//   POS PIN
-// </label>
-// <input
-//   type="number"
-//   id="poseCode"
-//   name="poseCode"
-//   autoComplete="off"
-//   className="mt-1 block w-full p-2 text-xs bg-[#f4f5f6] rounded-md shadow-sm focus:ring-none focus:outline-gray-300"
-//   placeholder='* * * *'
-// />
-//  <span className="text-[15px] text-red-600">{"validationErrors.poseCode"}</span>
-// </div>
+// address
+// city
+// country
+// customerCode
+// email
+// firstVisit
+// id
+// lastVisit
+// name
+// note
+// phone
+// pointsBalance
+// state
+// totalVisits
