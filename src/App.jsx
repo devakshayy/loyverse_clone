@@ -15,6 +15,9 @@ import Edit from "./Page/Edit";
 import View from "./Page/View";
 import Login from "./Page/Login";
 import CreateEmployee from "./Page/CreateEmployee";
+import CustomerView from "./Page/CustomerView";
+import CreateCustomer from "./Page/CreateCustomer";
+import CustomerEdit from "./Page/CustomerEdit";
 
 function App() {
   // const navigate = useNavigate();
@@ -50,7 +53,7 @@ function App() {
         >
           <Routes>
             {/* <Route path="/" element={ <ProtectedRoute isAuthenticated={false}><Login/></ProtectedRoute> }/> */}
-            <Route path="/" element={<Login/>} />
+            <Route path="/" element={<Items />} />
             <Route path="/items" element={<Items />} />
             <Route path="/create" element={ <Create/> } />
             <Route path="/createemployee" element={ <CreateEmployee/> } />
@@ -61,6 +64,9 @@ function App() {
             <Route path="/inventrymanagement" element={ <Inventrymanagement/> } />
             <Route path="/employees" element={ <Employees/> } />
             <Route path="/customers" element={ <Customers/> } />
+            <Route path="/createcustomer" element={ <CreateCustomer/> }/>
+            <Route path="/editcustomer/:cusid" element={ <CustomerEdit/> } />
+            <Route path="/customers/:cusid" element={ <CustomerView/> } />
             <Route path="/integrations" element={ <Integration/> } />
             <Route path="/settings" element={ <Settings/> } />
             <Route path="/help" element={ <Help/> } /> 

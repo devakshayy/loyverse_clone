@@ -7,6 +7,67 @@ const Items = () => {
   const [items, setItems] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [filteredItem, setFilteredItem] = useState([])
+
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
+
+  const handleCheckboxChange = (id) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(filteredItem.map((item) => item.id));
+    }
+    setSelectAll(!selectAll);
+  };
+
+  // const handleDeleteSelected = () => {
+  //   setFilteredItem((prev) => prev.filter((item) => !selectedIds.includes(item.id)));
+  //   setSelectedIds([]);
+  //   setSelectAll(false);
+  // };
+  
+  const handleDeleteSelected = () => {
+    if (selectedIds.length === 0) {
+      alert("No Item selected to delete.");
+      return;
+    }
+  
+    const userChoice = confirm(`Are you sure you want to remove the selected Items?`);
+    
+    if (userChoice) {
+      Promise.all(
+        selectedIds.map((id) =>
+          fetch(`http://localhost:4000/items/${id}`, {
+            method: "DELETE",
+          })
+        )
+      )
+        .then((responses) => {
+          const failedResponses = responses.filter((response) => !response.ok);
+  
+          if (failedResponses.length > 0) {
+            throw new Error("Some deletions failed.");
+          } else {
+            setFilteredItem((prev) => prev.filter((item) => !selectedIds.includes(item.id)));
+      
+            setSelectedIds([]);
+            setSelectAll(false);
+            alert("Selected customers removed successfully.");
+          }
+        })
+        .catch(() => {
+          alert("Unable to remove some or all customers.");
+        });
+    }
+  };
+  
+
   
   useEffect(() => {
     setFilteredItem(items);
@@ -66,18 +127,28 @@ const Items = () => {
     
   }  
   return (
-    <div className="p-4 h-screen w-full  text-white">
+    <div className="p-4 h-screen w-full text-white">
       <div className=" flex flex-col justify-between gap-5 pt-[24px] pb-10  bg-white w-full shadow-lg rounded-sm">
         <div className="flex justify-between px-[30px] items-center ">
-          {" "}
           {/* Add item btn div */}
           <div className="flex items-center gap-2 ">
-            <Link
-              to="/create"
-              className="py-1 px-2 text-xs font-medium rounded-sm text-white bg-[#8cc748]"
-            >
-              + ADD ITEM
-            </Link>
+          {selectedIds.length > 0 ? (
+          <button
+            className="ml-2 py-1 px-2 text-xs font-medium rounded-sm text-white bg-red-500"
+            onClick={handleDeleteSelected}
+          >
+            Delete
+          </button>
+        ) : (
+          <Link
+          to="/create"
+          className="py-1 px-2 text-xs font-medium rounded-sm text-white bg-[#8cc748]"
+        >
+          + ADD ITEM
+        </Link>
+        )}
+            
+            
             <button className="py-1 px-2 text-xs font-medium rounded-sm text-gray-900 hover:bg-[#f2f2f2]">
               IMPORT
             </button>
@@ -145,6 +216,8 @@ const Items = () => {
                   <th scope="col" className="p-4">
                     <div className="flex items-center">
                       <input
+                        checked={selectAll}
+                        onChange={handleSelectAll}
                         onClick={(e) => e.stopPropagation()}
                         id="checkbox-all-search"
                         type="checkbox"
@@ -192,6 +265,8 @@ const Items = () => {
                     <td className="w-4 p-4">
                       <div className="flex items-center">
                         <input
+                          checked={selectedIds.includes(item.id)}
+                          onChange={() => handleCheckboxChange(item.id)}
                           onClick={(e) => e.stopPropagation()}
                           id="checkbox-table-search-1"
                           type="checkbox"

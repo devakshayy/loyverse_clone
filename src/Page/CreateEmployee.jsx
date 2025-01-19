@@ -6,7 +6,7 @@ const CreateEmployee = () => {
 
   const [validationErrors,setValidationErrors] = useState({})
   const navigate = useNavigate();
-  
+
  const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target)
@@ -38,7 +38,7 @@ const CreateEmployee = () => {
     
  }
   return (
-    <div className="p-2 h-screen w-full bg-white text-gray-900 overflow-auto">  
+      <div className="p-2 h-screen w-full bg-white text-gray-900 overflow-auto">  
         <form id="form" onSubmit={handleSubmit} >
           <div className="bg-white w-1/2 rounded-md shadow-2xl">
             <div className="flex items-center justify-center border-b-[1px] px-3 py-2">
@@ -137,7 +137,7 @@ const CreateEmployee = () => {
                 </div>
                 {/* Sale Rate */}
                 <div className="flex justify-end mt-1 gap-4">
-                 <Link to="/items" className="py-2 px-2 w-[100px] text-xs font-medium rounded-sm text-gray-900 bg-white shadow-md">
+                 <Link to="/employees" className="py-2 px-2 w-[100px] text-xs font-medium rounded-sm text-gray-900 bg-white shadow-md">
                    Cancel
                  </Link>
                  <button  type="submit" className="py-2 px-2 w-[100px] text-xs font-medium rounded-sm text-white bg-[#8cc748]">
