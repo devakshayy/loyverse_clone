@@ -132,13 +132,13 @@ const Employees = () => {
           <div>
             <Link
               to="/createemployee"
-              className="py-1 px-2 text-xs font-medium rounded-sm text-white bg-[#8cc748]"
+              className="py-1 px-1  text-[13px] sm:text-xs font-medium rounded-sm text-white bg-[#8cc748]"
             >
-              + ADD EMPLOYEE
+             <button>+ ADD EMPLOYEE</button>
             </Link>
             {selectedIds.length > 0 && (
                      <button
-                     className="ml-2 py-1 px-2 text-xs font-medium rounded-sm text-white bg-red-500"
+                     className="ml-2 py-1 px-2 text-[11px] sm:text-xs font-medium rounded-sm text-white bg-red-500"
                      onClick={handleDeleteSelected}
                    >
                      Delete
@@ -150,7 +150,7 @@ const Employees = () => {
             <input
               value={searchEmployee}
               onChange={handleSearch}
-              className="outline-none border-b-2 border-gray-800 focus:border-gray-200  text-gray-600 text-sm  px-1"
+              className="outline-none border-b-2 w-[120px] border-gray-800 focus:border-gray-200  text-gray-600 text-sm  px-1"
               placeholder="Search... "
               type="text"
             />

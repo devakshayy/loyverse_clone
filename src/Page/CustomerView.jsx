@@ -62,7 +62,7 @@ const CustomerView = () => {
   
   return (
     <div className="p-2 h-screen w-full bg-white text-gray-900 overflow-auto">  
-      <div className="bg-white w-1/2 rounded-md shadow-2xl">
+      <div className="bg-white w-full sm:w-1/2  rounded-md shadow-2xl">
          <div className='border-b-2 p-2 flex items-center justify-between'>
              <button onClick={()=>navigate("/customers")} className='text-xs flex items-center gap-2 p-1 hover:bg-gray-100'><IoChevronBack />Customer base</button>
             <div className='flex items-center gap-2'>
